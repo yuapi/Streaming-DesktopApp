@@ -12,7 +12,7 @@
     "url": "git+https://github.com/yuapi/Streaming-DesktopApp.git"
   },
   "author": "yuapi",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/yuapi/Streaming-DesktopApp/issues"
   },
