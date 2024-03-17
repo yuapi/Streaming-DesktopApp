@@ -1,9 +1,9 @@
 const chzzk = require("./plugins/chzzk.js");
 const { initRPC, setRPC } = require("./plugins/discord.js");
 
-function init(win) {
+function init(view) {
 	initRPC();
-	win.webContents.on("did-navigate-in-page", (event, url, isMainFrame) => {
+	view.webContents.on("did-navigate-in-page", (event, url, isMainFrame) => {
 		if (url.startsWith("https://chzzk.naver.com/live/")) setChzzkLive(url.split("/")[4]);
 		else if (url.startsWith("https://chzzk.naver.com/video/")) setChzzkVideo(url.split("/")[4]);
 		else if (url === "https://chzzk.naver.com" || url === "https://chzzk.naver.com/") setChzzkMain();
