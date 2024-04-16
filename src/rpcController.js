@@ -1,9 +1,10 @@
 const chzzk = require("./plugins/chzzk.js");
 const { initRPC, setRPC } = require("./plugins/discord.js");
 
-function init(view) {
+function init(win) {
 	initRPC();
-	view.webContents.on("did-navigate-in-page", (event, url, isMainFrame) => {
+	win.webContents.on("did-navigate-in-page", (event, url, isMainFrame) => {
+		console.log(url)
 		if (url.startsWith("https://chzzk.naver.com/live/")) setChzzkLive(url.split("/")[4]);
 		else if (url.startsWith("https://chzzk.naver.com/video/")) setChzzkVideo(url.split("/")[4]);
 		else if (url === "https://chzzk.naver.com" || url === "https://chzzk.naver.com/") setChzzkMain();
@@ -27,7 +28,7 @@ async function setChzzkChannel(id) {
 	const setting = {
 		details: content.channelName,
 		state: "탐색중",
-		largeImageKey: "chzzk_logo",
+		largeImageKey: content.channelImageUrl,
 		largeImageText: "치지직",
 	}
 	setRPC(setting);
@@ -40,7 +41,7 @@ async function setChzzkLive(id) {
 		details: content.liveTitle,
 		state: content.channel.channelName,
 		startTimestamp: getTimeStamp(content.openDate),
-		largeImageKey: "chzzk_logo",
+		largeImageKey: content.liveImageUrl.replace('{type}', '144'),
 		largeImageText: "치지직",
 		buttons: [{ label: "치지직에서 시청하기", url: `https://chzzk.naver.com/live/${id}` }]
 	}
@@ -53,7 +54,7 @@ async function setChzzkVideo(id) {
 	const setting = {
 		details: `[다시보기] ${content.videoTitle}`,
 		state: content.channel.channelName,
-		largeImageKey: "chzzk_logo",
+		largeImageKey: content.thumbnailImageUrl,
 		largeImageText: "치지직",
 		buttons: [{ label: "치지직에서 시청하기", url: `https://chzzk.naver.com/video/${id}` }]
 	}
